@@ -9,4 +9,4 @@ pytorch
 ## Input
 
 ## Output
-Run the `train.py' to train the data  
+Run the `train.py` to train the data  
