@@ -82,8 +82,6 @@ class Constructor:
                 0.5 * self.loss_function(valid_output2, valid_labels)).item())
             valid_loss_avg = torch.mean(torch.Tensor(valid_loss))
             self.scheduler.step(valid_loss_avg)
-            #a,r,p=self.calculate(predicted,true)
-            #print(a)
         return valid_loss_avg
 
     def test(self, TestLoader, model_name):
