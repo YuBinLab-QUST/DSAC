@@ -13,7 +13,7 @@ class dsac(nn.Module):
             nn.BatchNorm2d(num_features=128)
 
         )
-
+        self.dropout = nn.Dropout(0.5)
         self.max_pooling_1 = nn.MaxPool2d(kernel_size=(1, 4), stride=(1, 2))
 
         self.attention_1 = Att.SelfAttention(101, 4, 0.2)
@@ -44,8 +44,9 @@ class dsac(nn.Module):
         att_seq_1 = self.attention_1(seq)
         att_seq_1 = att_seq_1.unsqueeze(1)
 
-        conv_seq_1 = self.convolution1(att_seq_1)#seq
+        conv_seq_1 = self.convolution1(att_seq_1)
         pool_seq_1 = self.max_pooling_1(conv_seq_1)
+        pool_seq_1 = self.dropout(pool_seq_1)
 
         att_seq_2 = pool_seq_1.squeeze(2)
         att_seq_2 = self.attention_2(att_seq_2)
@@ -53,7 +54,6 @@ class dsac(nn.Module):
 
         conv_seq_2 = self.convolution2(pool_seq_1)
         att_seq_2 = self.convolution2(att_seq_2)
-        #print(att_seq_2.shape)
 
         return self.output(att_seq_2),self.output(conv_seq_2)
     def forward(self, seq):
