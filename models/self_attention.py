@@ -53,7 +53,6 @@ class SelfAttention(nn.Module):
         q = self.query(input)
         k = self.key(input)
         v = self.value(input)
-        #print(q.shape)
 
         Q = self.transpose_for_scores(q)
         K = self.transpose_for_scores(k)
@@ -63,7 +62,6 @@ class SelfAttention(nn.Module):
             Take the dot product between "query" and "key" to get the raw attention scores.
         """
         attention_scores = torch.matmul(Q, K.transpose(-1, -2))
-        #print(attention_scores.shape)
 
         attention_scores = attention_scores / math.sqrt(self.attention_size)
         """
@@ -81,7 +79,6 @@ class SelfAttention(nn.Module):
         output =output.view(*output_shape)
         output = self.dense(output)
         output = self.out_dropout(output)
-        #print(output.shape)
 
         result = self.LayerNorm(output + input)
         result=result.permute(0, 2, 1)
